@@ -14,7 +14,7 @@ C_GREEN   = "#27ae60"
 C_RED     = "#e74c3c"
 C_ORANGE  = "#e67e22"
 C_BORDER  = "#d0dae8"
-CURRENCY  = "$"
+CURRENCY  = "₹"
 
 
 def fmt_currency(v):
@@ -456,7 +456,7 @@ class _ReceiptPickerDialog(tk.Toplevel):
                   font=("Segoe UI", 11)).pack(padx=20, pady=(16, 6))
 
         self.var = tk.StringVar()
-        options = {f"{b['bill_number']} — {b['bill_date']} — ${b['total']:.2f}": b["id"]
+        options = {f"{b['bill_number']} — {b['bill_date']} — ₹{b['total']:.2f}": b["id"]
                    for b in bills}
         self._map = options
         cb = ttk.Combobox(self, textvariable=self.var,

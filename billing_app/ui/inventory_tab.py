@@ -10,7 +10,7 @@ C_BG     = "#f4f7fb"
 C_WHITE  = "#ffffff"
 C_GREEN  = "#27ae60"
 C_RED    = "#e74c3c"
-CURRENCY = "$"
+CURRENCY = "₹"
 
 UNITS = ["pcs", "kg", "g", "litre", "ml", "hr", "day", "month",
          "set", "box", "pair", "sq.ft", "sq.m", "m", "ft", "other"]

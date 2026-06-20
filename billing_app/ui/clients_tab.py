@@ -11,7 +11,7 @@ C_WHITE  = "#ffffff"
 C_GREEN  = "#27ae60"
 C_RED    = "#e74c3c"
 C_BORDER = "#d0dae8"
-CURRENCY = "$"
+CURRENCY = "₹"
 
 
 def fmt_currency(v):

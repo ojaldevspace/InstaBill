@@ -14,7 +14,7 @@ C_GREEN   = "#27ae60"
 C_RED     = "#e74c3c"
 C_ORANGE  = "#e67e22"
 C_BORDER  = "#d0dae8"
-CURRENCY  = "$"
+CURRENCY  = "₹"
 
 STATUS_COLORS = {
     "paid":    C_GREEN,

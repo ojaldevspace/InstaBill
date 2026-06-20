@@ -111,7 +111,7 @@ def apply_theme(root: tk.Tk):
 class MainWindow:
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("BillBook — Billing & Receipt Manager")
+        self.root.title("InstaBill — Billing & Receipt Manager")
         self.root.geometry("1200x750")
         self.root.minsize(900, 600)
         self._center_window()
@@ -140,7 +140,7 @@ class MainWindow:
         header.pack_propagate(False)
 
         logo_lbl = tk.Label(
-            header, text="🧾  BillBook",
+            header, text="⚡  InstaBill",
             bg=C_HEADER, fg=C_WHITE,
             font=("Segoe UI", 20, "bold")
         )
