@@ -1,0 +1,73 @@
+name: Build Windows App
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'          # Also triggers on version tags like v1.0.0
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller reportlab
+        working-directory: billing_app
+
+      - name: Build executable with PyInstaller
+        run: |
+          pyinstaller BillBook.spec
+        working-directory: billing_app
+
+      - name: Verify build output
+        run: |
+          dir billing_app\dist
+          echo "Build completed successfully"
+
+      # ── Upload as artifact (available for 7 days on every push) ──
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BillBook-Windows
+          path: billing_app/dist/BillBook.exe
+          retention-days: 7
+
+      # ── Create a GitHub Release when you push a version tag ──────
+      # Push a tag like: git tag v1.0.0 && git push origin v1.0.0
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: billing_app/dist/BillBook.exe
+          name: BillBook ${{ github.ref_name }}
+          body: |
+            ## BillBook ${{ github.ref_name }}
+
+            ### Installation
+            1. Download `BillBook.exe` below
+            2. Double-click to run — no installation needed
+            3. Windows may show a SmartScreen warning on first run; click **"More info" → "Run anyway"**
+
+            ### What's included
+            - Complete billing and receipt manager
+            - Client & inventory management
+            - Monthly ledger with payment tracking
+            - Receipt export (TXT + PDF)
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

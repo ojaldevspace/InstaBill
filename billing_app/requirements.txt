@@ -1,0 +1,6 @@
+# Runtime dependencies
+reportlab==4.2.5
+
+# Build dependency (used by GitHub Actions to create the Windows .exe)
+# Not needed to run the app directly
+pyinstaller==6.11.1
