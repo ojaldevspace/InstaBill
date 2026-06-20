@@ -19,6 +19,7 @@ billing_app/dist/
 billing_app/billing.db
 
 # Virtual environments
+billing_app/.venv/
 .venv/
 venv/
 env/
