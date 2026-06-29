@@ -9,26 +9,30 @@ from datetime import datetime
 
 def _get_db_path() -> str:
     """
-    Return a persistent path for billing.db that survives across app restarts.
+    Return a persistent path for billing.db.
 
-    - Windows (.exe or raw): %APPDATA%\\InstaBill\\billing.db
-    - macOS:                 ~/Library/Application Support/InstaBill/billing.db
-    - Linux:                 ~/.local/share/InstaBill/billing.db
-
-    This avoids the PyInstaller temp-folder problem where __file__ points to
-    a directory that is deleted when the .exe closes.
+    - Windows: D:\\InstaBill\\billing.db
+      Falls back to C:\\InstaBill\\ if D: drive does not exist.
+    - macOS:   ~/Library/Application Support/InstaBill/billing.db
+    - Linux:   ~/.local/share/InstaBill/billing.db
     """
     app_name = "InstaBill"
 
     if sys.platform == "win32":
-        base = os.environ.get("APPDATA", os.path.expanduser("~"))
+        # Prefer D: drive; fall back to C: if D: is not available
+        if os.path.exists("D:\\"):
+            base = "D:\\"
+        else:
+            base = "C:\\"
+        data_dir = os.path.join(base, app_name)
     elif sys.platform == "darwin":
         base = os.path.join(os.path.expanduser("~"), "Library", "Application Support")
+        data_dir = os.path.join(base, app_name)
     else:
         base = os.environ.get("XDG_DATA_HOME",
                               os.path.join(os.path.expanduser("~"), ".local", "share"))
+        data_dir = os.path.join(base, app_name)
 
-    data_dir = os.path.join(base, app_name)
     os.makedirs(data_dir, exist_ok=True)
     return os.path.join(data_dir, "billing.db")
 
