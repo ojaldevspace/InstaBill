@@ -3,9 +3,37 @@ database.py - SQLite database setup and all query functions
 """
 import sqlite3
 import os
+import sys
 from datetime import datetime
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "billing.db")
+
+def _get_db_path() -> str:
+    """
+    Return a persistent path for billing.db that survives across app restarts.
+
+    - Windows (.exe or raw): %APPDATA%\\InstaBill\\billing.db
+    - macOS:                 ~/Library/Application Support/InstaBill/billing.db
+    - Linux:                 ~/.local/share/InstaBill/billing.db
+
+    This avoids the PyInstaller temp-folder problem where __file__ points to
+    a directory that is deleted when the .exe closes.
+    """
+    app_name = "InstaBill"
+
+    if sys.platform == "win32":
+        base = os.environ.get("APPDATA", os.path.expanduser("~"))
+    elif sys.platform == "darwin":
+        base = os.path.join(os.path.expanduser("~"), "Library", "Application Support")
+    else:
+        base = os.environ.get("XDG_DATA_HOME",
+                              os.path.join(os.path.expanduser("~"), ".local", "share"))
+
+    data_dir = os.path.join(base, app_name)
+    os.makedirs(data_dir, exist_ok=True)
+    return os.path.join(data_dir, "billing.db")
+
+
+DB_PATH = _get_db_path()
 
 
 def get_connection():

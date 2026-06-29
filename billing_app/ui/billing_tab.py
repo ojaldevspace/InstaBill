@@ -391,7 +391,7 @@ class BillingTab:
             msg = f"Bill {bill_num} saved successfully."
             self.status_lbl.config(text=msg, foreground=C_GREEN)
             self.app.set_status(msg)
-            self.app.ledger_tab.refresh_clients()
+            self.app.refresh_all()
             # Ask if they want to generate receipt now
             if messagebox.askyesno("Success",
                                    f"{msg}\n\nGenerate receipt now?"):

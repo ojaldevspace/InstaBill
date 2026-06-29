@@ -198,7 +198,7 @@ class ClientsTab:
                 msg = f"Client '{name}' added."
             self.info_lbl.config(text=msg, foreground=C_GREEN)
             self.load_clients()
-            self.app.refresh_billing_clients()
+            self.app.refresh_all()
             self.app.set_status(msg)
         except Exception as e:
             messagebox.showerror("Error", str(e))
@@ -218,7 +218,7 @@ class ClientsTab:
             self.selected_id = None
             self.clear_form()
             self.load_clients()
-            self.app.refresh_billing_clients()
+            self.app.refresh_all()
             self.app.set_status("Client deleted.")
         except Exception as e:
             messagebox.showerror("Error", str(e))

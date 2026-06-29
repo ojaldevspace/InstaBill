@@ -203,3 +203,11 @@ class MainWindow:
         """Called after client changes so billing tab dropdown stays fresh."""
         self.billing_tab.refresh_clients()
         self.ledger_tab.refresh_clients()
+
+    def refresh_all(self):
+        """Refresh every tab — call this after any write operation."""
+        self.clients_tab.load_clients()
+        self.inventory_tab.load_items()
+        self.billing_tab.refresh_clients()
+        self.billing_tab.refresh_inventory()
+        self.ledger_tab.refresh_clients()

@@ -306,6 +306,7 @@ class LedgerTab:
         self.apply_filter()
         if self._selected_bill_id:
             self._load_payments(self._selected_bill_id)
+        self.app.clients_tab.load_clients()
         self.app.set_status("Payment recorded.")
 
     def delete_payment(self):
@@ -321,6 +322,7 @@ class LedgerTab:
             self.apply_filter()
             if self._selected_bill_id:
                 self._load_payments(self._selected_bill_id)
+            self.app.clients_tab.load_clients()
             self.app.set_status("Payment deleted.")
         except Exception as e:
             messagebox.showerror("Error", str(e))
@@ -351,6 +353,7 @@ class LedgerTab:
             for item in self.pay_tree.get_children():
                 self.pay_tree.delete(item)
             self.apply_filter()
+            self.app.clients_tab.load_clients()
             self.app.set_status("Bill deleted.")
         except Exception as e:
             messagebox.showerror("Error", str(e))

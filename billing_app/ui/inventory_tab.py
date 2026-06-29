@@ -187,7 +187,6 @@ class InventoryTab:
                 msg = f"Item '{name}' added."
             self.info_lbl.config(text=msg, foreground=C_GREEN)
             self.load_items()
-            # Also refresh billing tab's inventory dropdown
             self.app.billing_tab.refresh_inventory()
             self.app.set_status(msg)
         except Exception as e:
